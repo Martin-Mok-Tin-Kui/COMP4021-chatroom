@@ -125,7 +125,7 @@ print "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
             </embed>
         </object>-->
         <div id="chatroom">
-            Chat
+            <h1>Admin : Please Login To Chat</h1>
         </div>
         <form action="">
             <input type="hidden" value="<?php print $name; ?>" id="username" />
