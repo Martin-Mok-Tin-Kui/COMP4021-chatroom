@@ -16,6 +16,12 @@ print "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
         <link rel="stylesheet" type="text/css" href="style.css" />
         <script language="javascript" type="text/javascript">
         //<![CDATA[
+        function Message(name, content) {
+            this.name = name;
+            this.content = content;
+        }
+
+        var chatroom ;
         var loadTimer = null;
         var request;
         var datasize;
@@ -28,20 +34,20 @@ print "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
                 return;
             }
 
+
             loadTimer = null;
             datasize = 0;
             lastMsgID = 0;
-
-            var chatroom = document.getElementById("chatroom");
-            chatroom.SetVariable("online", true);
-
+            chatroom = document.getElementById('chatroom');
             getUpdate();
+            chatroom.scrollTop.value = chatroom.scrollHeight.value
+            console.log("scroll top " + chatroom.scrollTop); 
         }
 
         function unload() {
             var username = document.getElementById("username");
             if (username.value != "") {
-                request = new ActiveXObject("Microsoft.XMLHTTP");
+                request = new XMLHttpRequest();
                 request.open("POST", "logout.php", true);
                 request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 request.send(null);
@@ -54,7 +60,7 @@ print "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
         }
 
         function getUpdate() {
-            request = new ActiveXObject("Microsoft.XMLHTTP");
+            request = new XMLHttpRequest();
             request.onreadystatechange = stateChange;
             request.open("POST", "server.php", true);
             request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -79,22 +85,48 @@ print "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 
         function updateChat(xmlDoc) {
             var messages = xmlDoc.getElementsByTagName("message");
-            var msgStr = "";
+            var msgStr = []
+            
+            for (var i = lastMsgID; i < messages.length; i++) {
+                // Obtain user name and message content from each message node,
+                // and add to the variable msg
+                // We use "|" as a separator to separate each user name and message content
+                var msg = messages.item(i);
+                msgStr.push(new Message(msg.getAttribute("name"), msg.firstChild.nodeValue))
+            }
+            lastMsgID = messages.length;
+            console.log("updateChat" +msgStr.length);
 
-            /* Add your code here */
-
+            addMsgsToChatroom(msgStr);
         }
+
+        function addMsgsToChatroom(msgStr){
+            for (var i = 0; i < msgStr.length ; i++){
+                var msg = document.createElement("p");
+                var node = document.createTextNode(msgStr[i].name + " : " +msgStr[i].content);
+                msg.appendChild(node);
+                chatroom.appendChild(msg);
+            }
+            chatroom.scrollTop = chatroom.scrollHeight  
+        }
+
         //]]>
         </script>
     </head>
     <body style="text-align: left" onload="load()" onunload="unload()">
-        <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://active.macromedia.com/flash2/cabs/swflash.cab#version=4,0,0,0"
+        <!--
+        <object id="chatroom_object">
+            <embed classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://active.macromedia.com/flash2/cabs/swflash.cab#version=4,0,0,0"
                 id="chatroom" width="800" height="350">
-            <param name="movie" value="chat.swf" />
-            <param name="quality" value="high" />
-            <param name="play" value="false" />
-            <param name="swliveconnect" value="true" />
-        </object>
+                <param name="movie" value="chat.swf" />
+                <param name="quality" value="high" />
+                <param name="play" value="false" />
+                <param name="swliveconnect" value="true" />
+            </embed>
+        </object>-->
+        <div id="chatroom">
+            Chat
+        </div>
         <form action="">
             <input type="hidden" value="<?php print $name; ?>" id="username" />
         </form>
