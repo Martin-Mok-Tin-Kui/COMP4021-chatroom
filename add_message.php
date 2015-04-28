@@ -35,8 +35,6 @@ $xmlh->setAttribute($message_element, "name", $name);
 $xmlh->addText($message_element, $message);
 $xmlh->saveFile();
 
-
-
 header("Location: client.php");
 
 ?>
