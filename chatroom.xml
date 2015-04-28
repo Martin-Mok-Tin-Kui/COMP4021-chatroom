@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<chatroom>
+  <users><user name="hello"/><user name="hello"/></users>
+  <messages><message name="hello">dude</message><message name="hello">whatsup</message></messages>
+</chatroom>
