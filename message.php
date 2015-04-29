@@ -100,15 +100,30 @@ print "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
             addMsgsToChatroom(msgStr);
         }
 
+        function applyURL(content){
+            var words = content.split(" ")
+            var s = ""
+            for (var i=0; i<words.length; i++){
+                if (words[i].indexOf("http://")==0)
+                    words[i] = "<a href =\"" + words[i] + "\" target=\"_blank\">" + words[i] + "</a>"
+                s = s + words[i] + " "
+            }
+            return s
+        }
+
         function addMsgsToChatroom(msgStr){
             for (var i = 0; i < msgStr.length ; i++){
                 var msg = document.createElement("p");
-                var node = document.createTextNode(msgStr[i].name + " : " +msgStr[i].content);
-                msg.appendChild(node);
+                msg.innerHTML = msgStr[i].name + " : " + applyURL(msgStr[i].content)
+                //var node = document.createTextNode(msgStr[i].name + " : " +msgStr[i].content);
+                
+                //msg.appendChild(node);
                 chatroom.appendChild(msg);
             }
             chatroom.scrollTop = chatroom.scrollHeight  
         }
+
+        
 
         //]]>
         </script>
