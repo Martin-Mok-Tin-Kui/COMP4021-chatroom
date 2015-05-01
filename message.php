@@ -40,8 +40,7 @@ print "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
             lastMsgID = 0;
             chatroom = document.getElementById('chatroom');
             getUpdate();
-            chatroom.scrollTop.value = chatroom.scrollHeight.value
-            console.log("scroll top " + chatroom.scrollTop); 
+             
         }
 
         function unload() {
@@ -95,7 +94,6 @@ print "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
                 msgStr.push(new Message(msg.getAttribute("name"), msg.firstChild.nodeValue))
             }
             lastMsgID = messages.length;
-            console.log("updateChat" +msgStr.length);
 
             addMsgsToChatroom(msgStr);
         }
@@ -120,7 +118,7 @@ print "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
                 //msg.appendChild(node);
                 chatroom.appendChild(msg);
             }
-            chatroom.scrollTop = chatroom.scrollHeight  
+            window.scrollTo(0,document.body.scrollHeight); 
         }
 
         

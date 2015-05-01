@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
 <chatroom>
-  <users><user name="jiho"/></users>
-  <messages><message name="hello">hi</message><message name="hello">your name?</message><message name="jiho">hello</message><message name="jiho">http://google.com</message><message name="jiho">abcd http://helloworld.com</message><message name="jiho">http://google.com http://fb.com</message><message name="jiho">abc</message><message name="jiho">abcd http://helloworld.com</message><message name="jiho">http://google.com http://fb.com</message><message name="jiho">helloworld</message><message name="jiho">asdf</message><message name="jiho">www.parkjiho.kr www.google.com</message><message name="jiho">http://www.parkjiho.kr helloworld haha</message></messages>
+  <users/>
+  <messages></messages>
 </chatroom>
